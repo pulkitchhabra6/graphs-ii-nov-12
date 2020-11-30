@@ -41,7 +41,8 @@ vi bellman_ford(int src)
 		for (vi edg : edges)
 		{
 			int u = edg[0], v = edg[1], w = edg[2];
-			d[v] = min(d[v], d[u] + w);
+			if(d[u] < inf)
+				d[v] = min(d[v], d[u] + w);
 		}
 
 		/*if(old_d == d)
@@ -64,9 +65,12 @@ bool detect_neg_cycle_affecting_dist_from_src(int src)
 			int u = edg[0], v = edg[1], w = edg[2];
 
 			if (i < n - 1)
-				d[v] = min(d[v], d[u] + w);
+			{
+				if(d[v]<inf)
+					d[v] = min(d[v], d[u] + w);
+			}
 
-			else if (d[u] + w < d[v])
+			else if (d[u] < inf and d[u] + w < d[v])
 				return true;
 
 		}
